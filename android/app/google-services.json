@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "380839786495",
+    "project_id": "listanime-910c5",
+    "storage_bucket": "listanime-910c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380839786495:android:2c07c8729a96e1beb3d9ca",
+        "android_client_info": {
+          "package_name": "com.example.listanime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380839786495-lrmuflv13mt415d57gt04s77m26vimig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuI8Xt_SbMECaAiPl7UOHUhW59V91bxcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380839786495-lrmuflv13mt415d57gt04s77m26vimig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
