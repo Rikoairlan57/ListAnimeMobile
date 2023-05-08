@@ -1,6 +1,11 @@
 // ignore_for_file: sort_child_properties_last, prefer_const_constructors
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:listanime/screens/home_screen.dart';
+
+import '../extensions/email_validator.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -14,8 +19,39 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void _submit() async {
+      final validate = _formKey.currentState!.validate();
+      if (validate) {
+        _formKey.currentState!.save();
+        if (password != c_password) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Passwords is different')));
+          return;
+        }
+        try {
+          String user = '';
+          print(email);
+          await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(email: email, password: password)
+              .then((value) => user = value.user!.uid);
+          await FirebaseFirestore.instance.collection('users').doc(user).set({
+            'email': email.trim(),
+            'name': name,
+            'bio': '',
+            'imageurl': '',
+          });
+          print(user);
+          Navigator.pop(context);
+        } on FirebaseAuthException catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(e.message! + ' (firebase error)')));
+        }
+      }
+    }
+
     return SafeArea(
       child: Scaffold(
+        // backgroundColor: Colos.white,
         body: Stack(
           children: [
             Container(
@@ -50,7 +86,7 @@ class RegisterScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(15),
                               width: double.infinity,
                               child: Text(
-                                "Email",
+                                'EMAIL',
                                 textAlign: TextAlign.start,
                               ),
                             ),
@@ -61,6 +97,15 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (!value!.isValidEmail()) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Please give a valid email address')));
+                                  }
+                                },
+                                onSaved: (newValue) => email = newValue ?? '',
                                 textAlignVertical: TextAlignVertical.center,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -83,6 +128,15 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text('Please give a name')));
+                                  }
+                                },
+                                onSaved: (newValue) => name = newValue ?? '',
                                 textAlignVertical: TextAlignVertical.center,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -105,6 +159,17 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               child: TextFormField(
+                                validator: (value) {
+                                  if (value!.length < 7) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Password needs a minimum length of 7')));
+                                    return;
+                                  }
+                                },
+                                onSaved: (newValue) =>
+                                    password = newValue ?? '',
                                 obscureText: true,
                                 textAlignVertical: TextAlignVertical.center,
                                 decoration: InputDecoration(
@@ -127,6 +192,17 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               child: TextFormField(
+                                onSaved: (newValue) =>
+                                    c_password = newValue ?? '',
+                                validator: (value) {
+                                  if (value!.length < 7) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Password needs a minimum length of 7')));
+                                    return;
+                                  }
+                                },
                                 textAlignVertical: TextAlignVertical.center,
                                 obscureText: true,
                                 decoration: InputDecoration(
@@ -141,9 +217,15 @@ class RegisterScreen extends StatelessWidget {
                         height: 20,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
+                        },
                         child: GestureDetector(
-                          onTap: () => {},
+                          onTap: () => _submit(),
                           child: Container(
                             margin: EdgeInsets.symmetric(vertical: 10),
                             width: double.infinity,
@@ -158,7 +240,7 @@ class RegisterScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
