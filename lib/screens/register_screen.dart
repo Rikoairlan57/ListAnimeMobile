@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -165,7 +167,7 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => {},
+              onTap: () => Navigator.pop(context),
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(20),

@@ -132,7 +132,7 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       const Text('Dont have account?'),
                       GestureDetector(
-                        onTap: () => print("ke screen register"),
+                        onTap: () => Navigator.pushNamed(context, '/register'),
                         child: const Text(
                           ' Create account',
                           style: TextStyle(color: Colors.grey),
