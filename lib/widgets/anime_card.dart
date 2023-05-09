@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:listanime/screens/detail_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../providers/favorite_provider.dart';
-import '../screens/detail_screen.dart';
 
 class AnimeCard extends StatelessWidget {
   const AnimeCard(
@@ -22,7 +22,16 @@ class AnimeCard extends StatelessWidget {
     return Animate(
       effects: [TintEffect(begin: 1, end: 0, duration: Duration(seconds: 1))],
       child: GestureDetector(
-        onTap: () => {},
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => DetailScreen(
+                  title: title,
+                  id: id.toString(),
+                  // favorite: favorite,
+                )),
+          ),
+        ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Column(children: [

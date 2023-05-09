@@ -9,9 +9,11 @@ import 'package:listanime/screens/home_screen.dart';
 import 'package:listanime/screens/login_screen.dart';
 import 'package:listanime/screens/profile.dart';
 import 'package:listanime/screens/top_anime.dart';
-
+import 'providers/favorite_provider.dart';
 import 'screens/register_screen.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/search_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,13 +22,19 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: ((context) => AuthProvider())),
     ChangeNotifierProvider(create: ((context) => AnimeProvider())),
+    ChangeNotifierProvider(create: ((context) => FavoriteProvider())),
     ChangeNotifierProvider(create: ((context) => SearchProvider()))
   ], child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,6 +54,7 @@ class MyApp extends StatelessWidget {
           }),
           stream: FirebaseAuth.instance.authStateChanges()),
       routes: {
+        '/search-screen': (context) => const SearchScreen(),
         '/register': (context) => RegisterScreen(),
         '/profile': ((context) => Profile()),
         '/top-anime': ((context) => TopAnime())
