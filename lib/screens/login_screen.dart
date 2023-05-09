@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../extensions/email_validator.dart';
 
 class LoginScreen extends StatelessWidget {
