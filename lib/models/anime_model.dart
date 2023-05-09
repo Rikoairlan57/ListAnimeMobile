@@ -40,7 +40,6 @@ class AnimeModel {
     for (int i = 0; i < genresList.length; i++) {
       var genres = json['genres'][i]['name'];
       tempGenresList.add(genres);
-      // print(tempGenresList);
     }
 
     return AnimeModel(

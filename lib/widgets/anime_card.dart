@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:listanime/screens/detail_screen.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../providers/favorite_provider.dart';
+import '../screens/detail_screen.dart';
 
 class AnimeCard extends StatelessWidget {
   const AnimeCard(

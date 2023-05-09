@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:listanime/widgets/search_card.dart';
 
+import 'package:provider/provider.dart';
+import '../models/search_model.dart';
 import '../providers/search_provider.dart';
 import 'custom_progress_indicator.dart';
-import 'search_card.dart';
 
 class SearchList extends StatefulWidget {
   const SearchList({super.key});
@@ -27,7 +28,6 @@ class _SearchListState extends State<SearchList> {
             return const Center(
                 child: CustomProgressIndicator(color: Colors.black));
           }
-
           if (search.searchList.isEmpty) {
             return const Center(
               child: Text('Nothing found.'),

@@ -1,6 +1,6 @@
-class Favorite {
+class FavoriteModel {
   String id;
   bool isFavorite;
 
-  Favorite({required this.id, required this.isFavorite});
+  FavoriteModel({required this.id, required this.isFavorite});
 }

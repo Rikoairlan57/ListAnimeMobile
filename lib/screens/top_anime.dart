@@ -26,33 +26,40 @@ class _TopAnimeState extends State<TopAnime> {
   Widget build(BuildContext context) {
     final favoritedata = Provider.of<FavoriteProvider>(context).favorites;
     return Scaffold(
-        appBar: AppBar(title: Text('Top Anime')),
-        body: FutureBuilder(
-          future: future,
-          builder: (context, snapshot) =>
-              snapshot.connectionState == ConnectionState.waiting
-                  ? Center(child: CustomProgressIndicator(color: Colors.black))
-                  : Column(
-                      children: [
-                        Expanded(
-                          child: GridView.builder(
-                              padding: const EdgeInsets.all(15),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 2 / 3,
-                                      mainAxisSpacing: 10,
-                                      crossAxisSpacing: 10),
-                              itemBuilder: (context, index) => AnimeCard(
+      appBar: AppBar(
+        title: Text('Top Anime'),
+      ),
+      body: FutureBuilder(
+        future: future,
+        builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CustomProgressIndicator(color: Colors.black),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: GridView.builder(
+                            padding: const EdgeInsets.all(15),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 2 / 3,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10),
+                            itemBuilder: (context, index) => AnimeCard(
                                   id: snapshot.data![index].malId,
                                   title: snapshot.data![index].title,
                                   imageUrl: snapshot.data![index].imageUrl,
                                   favorite: favoritedata.contains(
-                                      snapshot.data![index].malId.toString())),
-                              itemCount: snapshot.data!.length),
-                        ),
-                      ],
-                    ),
-        ));
+                                    snapshot.data![index].malId.toString(),
+                                  ),
+                                ),
+                            itemCount: snapshot.data!.length),
+                      ),
+                    ],
+                  ),
+      ),
+    );
   }
 }

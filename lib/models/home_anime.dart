@@ -2,13 +2,11 @@ class HomeAnime {
   int malId;
   String title;
   String imageUrl;
-  // bool score;
 
   HomeAnime({
     required this.imageUrl,
     required this.malId,
     required this.title,
-    // required this.score,
   });
 
   factory HomeAnime.fromJson(Map<String, dynamic> data) {

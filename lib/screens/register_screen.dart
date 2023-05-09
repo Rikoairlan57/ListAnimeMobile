@@ -1,10 +1,8 @@
-// ignore_for_file: sort_child_properties_last, prefer_const_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:listanime/screens/home_screen.dart';
-
+import 'home_screen.dart';
+import 'package:provider/provider.dart';
 import '../extensions/email_validator.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -100,9 +98,11 @@ class RegisterScreen extends StatelessWidget {
                                 validator: (value) {
                                   if (!value!.isValidEmail()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                'Please give a valid email address')));
+                                      SnackBar(
+                                        content: Text(
+                                            'Please give a valid email address'),
+                                      ),
+                                    );
                                   }
                                 },
                                 onSaved: (newValue) => email = newValue ?? '',
@@ -131,9 +131,10 @@ class RegisterScreen extends StatelessWidget {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content:
-                                                Text('Please give a name')));
+                                      SnackBar(
+                                        content: Text('Please give a name'),
+                                      ),
+                                    );
                                   }
                                 },
                                 onSaved: (newValue) => name = newValue ?? '',
@@ -162,9 +163,11 @@ class RegisterScreen extends StatelessWidget {
                                 validator: (value) {
                                   if (value!.length < 7) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                'Password needs a minimum length of 7')));
+                                      SnackBar(
+                                        content: Text(
+                                            'Password needs a minimum length of 7'),
+                                      ),
+                                    );
                                     return;
                                   }
                                 },
@@ -173,8 +176,9 @@ class RegisterScreen extends StatelessWidget {
                                 obscureText: true,
                                 textAlignVertical: TextAlignVertical.center,
                                 decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    suffixIcon: Icon(Icons.lock)),
+                                  border: InputBorder.none,
+                                  suffixIcon: Icon(Icons.lock),
+                                ),
                               ),
                             ),
                             Container(
@@ -197,17 +201,20 @@ class RegisterScreen extends StatelessWidget {
                                 validator: (value) {
                                   if (value!.length < 7) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text(
-                                                'Password needs a minimum length of 7')));
+                                      SnackBar(
+                                        content: Text(
+                                            'Password needs a minimum length of 7'),
+                                      ),
+                                    );
                                     return;
                                   }
                                 },
                                 textAlignVertical: TextAlignVertical.center,
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    suffixIcon: Icon(Icons.lock)),
+                                  border: InputBorder.none,
+                                  suffixIcon: Icon(Icons.lock),
+                                ),
                               ),
                             ),
                           ],

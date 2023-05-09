@@ -1,24 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:listanime/providers/anime_provider.dart';
-import 'package:listanime/providers/auth_provider.dart';
-import 'package:listanime/providers/search_provider.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:listanime/screens/home_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:listanime/screens/login_screen.dart';
-import 'package:listanime/screens/profile.dart';
-import 'package:listanime/screens/top_anime.dart';
-import 'providers/favorite_provider.dart';
-import 'screens/register_screen.dart';
+import 'package:listanime/screens/register_screen.dart';
 import 'package:provider/provider.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'screens/home_screen.dart';
+import 'providers/anime_provider.dart';
+import 'providers/auth_provider.dart';
+import 'providers/favorite_provider.dart';
+import 'providers/search_provider.dart';
+import 'screens/profile.dart';
 import 'screens/search_screen.dart';
+import 'screens/top_anime.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: ((context) => AuthProvider())),
     ChangeNotifierProvider(create: ((context) => AnimeProvider())),
@@ -39,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'List Anime',
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch()
             .copyWith(primary: Colors.black, secondary: Colors.grey[900]),
@@ -50,7 +48,7 @@ class _MyAppState extends State<MyApp> {
             if (snapshot.hasData) {
               return HomeScreen();
             }
-            return LoginScreen();
+            return AuthScreen();
           }),
           stream: FirebaseAuth.instance.authStateChanges()),
       routes: {

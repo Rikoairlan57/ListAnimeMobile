@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:dio/dio.dart';
-import 'package:listanime/models/search_model.dart';
+
+import '../models/search_model.dart';
 
 class SearchProvider extends ChangeNotifier {
   String _title = '';

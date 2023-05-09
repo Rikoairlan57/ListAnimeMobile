@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listanime/screens/detail_screen.dart';
-
+import '../screens/detail_screen.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class SearchCard extends StatelessWidget {
@@ -21,7 +20,15 @@ class SearchCard extends StatelessWidget {
     return Animate(
       effects: [FadeEffect()],
       child: InkWell(
-        onTap: () => {},
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => DetailScreen(
+                  title: title,
+                  id: id.toString(),
+                )),
+          ),
+        ),
         child: Column(
           children: [
             Container(
