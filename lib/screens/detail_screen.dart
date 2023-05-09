@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
-
 import '../providers/anime_provider.dart';
 import '../providers/favorite_provider.dart';
 import '../widgets/custom_progress_indicator.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen(
-      {super.key,
-      required this.id,
-      // required this.favorite,
-      required this.title});
+  const DetailScreen({super.key, required this.id, required this.title});
   final String id;
   final String title;
-  // final bool favorite;
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -45,7 +38,6 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        // actions: [IconButton(onPressed: () {}, icon: Icon(Icons.check))],
       ),
       body: FutureBuilder(
         future: future,

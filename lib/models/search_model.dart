@@ -1,12 +1,12 @@
 class SearchModel {
   int malId;
-  String imageUrl;
   String title;
+  String imageUrl;
   double score;
 
   SearchModel({
-    required this.malId,
     required this.imageUrl,
+    required this.malId,
     required this.title,
     required this.score,
   });

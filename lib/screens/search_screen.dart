@@ -11,14 +11,15 @@ class SearchScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
-          appBar: AppBar(
-            title: Text('Search'),
-            centerTitle: true,
-            backgroundColor: Colors.black,
-          ),
-          body: Column(
-            children: [SearchForm(), Expanded(child: SearchList())],
-          )),
+        appBar: AppBar(
+          title: Text('Search'),
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        body: Column(
+          children: [SearchForm(), Expanded(child: SearchList())],
+        ),
+      ),
     );
   }
 }

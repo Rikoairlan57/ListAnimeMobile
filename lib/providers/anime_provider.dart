@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
+import '../models/anime_model.dart';
 import '../constant/const.dart';
 import 'package:dio/dio.dart';
 import '../models/home_anime.dart';
-import '../models/anime_model.dart';
-import '../screens/home_screen.dart';
 
 class AnimeProvider extends ChangeNotifier {
   List<HomeAnime> _animes = [];

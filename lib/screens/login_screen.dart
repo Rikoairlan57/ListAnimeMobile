@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import '../extensions/email_validator.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class AuthScreen extends StatelessWidget {
+  const AuthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +28,6 @@ class LoginScreen extends StatelessWidget {
         }
       }
     }
-
-    // void tryRethrow() async {
-    //   // try {
-    //   await Provider.of<AuthProvider>(context, listen: false)
-    //       .SignUp()
-    //       .onError((error, stackTrace) => print('sss'));
-    //   // } catch (error) {
-    //   //   print('test');
-    //   // }
-    // }
 
     return Scaffold(
       // backgroundColor: Colos.white,

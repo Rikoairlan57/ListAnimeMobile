@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import '../providers/anime_provider.dart';
 import '../providers/favorite_provider.dart';
@@ -20,15 +21,19 @@ class _RecommendedState extends State<Recommended> {
       children: [
         Expanded(
           child: GridView.builder(
-            padding: const EdgeInsets.all(15),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2 / 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10),
-            itemCount: animedata.length,
-            itemBuilder: (BuildContext context, int index) {},
-          ),
+              padding: const EdgeInsets.all(15),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2 / 3,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10),
+              itemBuilder: (context, index) => AnimeCard(
+                  id: animedata[index].malId,
+                  title: animedata[index].title,
+                  imageUrl: animedata[index].imageUrl,
+                  favorite:
+                      favoritedata.contains(animedata[index].malId.toString())),
+              itemCount: animedata.length),
         ),
       ],
     );
