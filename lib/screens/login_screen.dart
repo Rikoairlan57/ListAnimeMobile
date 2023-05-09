@@ -1,6 +1,6 @@
-// ignore_for_file: sort_child_properties_last
-
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../extensions/email_validator.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -12,38 +12,59 @@ class LoginScreen extends StatelessWidget {
     String email = '';
     String password = '';
 
+    void _submit() async {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        try {
+          await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: email, password: password);
+        } on FirebaseAuthException catch (e) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(e.message!)));
+        }
+      }
+    }
+
+    // void tryRethrow() async {
+    //   // try {
+    //   await Provider.of<AuthProvider>(context, listen: false)
+    //       .SignUp()
+    //       .onError((error, stackTrace) => print('sss'));
+    //   // } catch (error) {
+    //   //   print('test');
+    //   // }
+    // }
+
     return Scaffold(
+      // backgroundColor: Colos.white,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(
+                SizedBox(
                   width: double.infinity,
                   child: Icon(
                     Icons.account_circle_rounded,
                     size: 100,
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "Welcome Back",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 30,
-                  ),
+                Text(
+                  'Welcome Back',
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "Sign in to Continue",
+                Text(
+                  'Sign in to Continue',
                   style: TextStyle(color: Colors.grey),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 40,
                 ),
                 Form(
@@ -53,72 +74,89 @@ class LoginScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(15),
                         width: double.infinity,
-                        child: const Text(
-                          "Email",
+                        child: Text(
+                          'EMAIL',
                           textAlign: TextAlign.start,
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                          validator: (value) {
+                            if (!value!.isValidEmail()) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          'Please give a valid email address')));
+                              return;
+                            }
+                            ;
+                          },
+                          onSaved: (newValue) => email = newValue ?? '',
                           textAlignVertical: TextAlignVertical.center,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: InputBorder.none,
-                            suffixIcon: Icon(
-                              Icons.email,
-                            ),
+                            suffixIcon: Icon(Icons.email),
                           ),
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(15),
                         width: double.infinity,
-                        child: const Text(
+                        child: Text(
                           'PASSWORD',
                           textAlign: TextAlign.start,
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        // alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                          onSaved: (newValue) => password = newValue ?? '',
+                          validator: (value) {
+                            if (value!.length < 7) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      'Password need a minimum length of 7')));
+                            }
+                          },
                           textAlignVertical: TextAlignVertical.center,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            suffixIcon: Icon(Icons.lock),
-                          ),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              suffixIcon: Icon(Icons.lock)),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
                 Container(
                   width: double.infinity,
-                  margin: const EdgeInsets.symmetric(vertical: 15),
-                  child: const Text(
-                    "Forget Password",
+                  margin: EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    'Forgot Password',
                     style: TextStyle(color: Colors.grey),
                     textAlign: TextAlign.end,
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => print("melakukan login"),
+                  onTap: _submit,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 10),
                     width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(7),
                         color: Colors.black),
-                    padding: const EdgeInsets.all(15),
-                    child: const Text(
+                    padding: EdgeInsets.all(15),
+                    child: Text(
                       'LOGIN',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white),
@@ -130,10 +168,10 @@ class LoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Dont have account?'),
+                      Text('Dont have account?'),
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, '/register'),
-                        child: const Text(
+                        child: Text(
                           ' Create account',
                           style: TextStyle(color: Colors.grey),
                         ),
